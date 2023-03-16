@@ -5,7 +5,7 @@ using namespace std;
 
 #include "compiler.h"
 
-int tokenizer(string& input, TokenptrVector& tokens) {
+int AKCompiler::tokenizer(string& input, TokenptrVector& tokens) {
     int current = 0;
     while (current < input.size()) {
         char c = input.at(current);
@@ -93,13 +93,13 @@ int tokenizer(string& input, TokenptrVector& tokens) {
             tokens.push_back(t);
             continue;
         }
-        cout << __func__ << " 未识别的类型: " << c << endl;
+        cout << __func__ << " Unknown type: " << c << endl;
         exit(1);
     }
     return tokens.size();
 }
 
-AStruct* walk(TokenptrVector& tokens, uint32_t& current) {
+AStruct* AKCompiler::walk(TokenptrVector& tokens, uint32_t& current) {
     Token* token = tokens[current];
     if (Token_Type_Comment == token->type) {
         current++;
@@ -159,11 +159,10 @@ AStruct* walk(TokenptrVector& tokens, uint32_t& current) {
         node->children->push_back(new AStruct(Ast_type_Quote, "}"));
         return node;
     }
-    cout << __func__ << " 未识别类型: " << token->type << endl;
+    cout << __func__ << " Unknown type: " << token->type << endl;
     exit(1);
 }
-
-AStruct* aster(TokenptrVector& tokens) {
+AStruct& AKCompiler::aster(TokenptrVector& tokens) {
     uint32_t current = 0;
     ASTptrVector* children = new ASTptrVector;
     AStruct* ast = new AStruct(Ast_Type_Program, ">", children);
@@ -171,10 +170,10 @@ AStruct* aster(TokenptrVector& tokens) {
         AStruct* child = walk(tokens, current);
         ast->children->push_back(child);
     }
-    return ast;
+    return *ast;
 }
 
-AStruct* compiler(string& input) {
+AStruct& AKCompiler::compiler(string& input) {
     TokenptrVector tokens;
     int count = tokenizer(input, tokens);
     return aster(tokens);
@@ -182,13 +181,13 @@ AStruct* compiler(string& input) {
 
 #pragma mark ---
 
-void print_indent(uint32_t indent = 0) {
+static void print_indent(uint32_t indent = 0) {
     for (int i = 0; i < indent; i++) {
         cout << " ";
     }
 }
 
-string type2name(Ast_Type type) {
+static string type2name(Ast_Type type) {
     switch (type) {
         case Ast_Type_Program: return ">";
         case Ast_Type_Comment: return "Comment";

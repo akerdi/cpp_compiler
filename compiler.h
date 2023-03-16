@@ -66,5 +66,13 @@ private:
     void exprDeleteNode();
 };
 
-// compiler Entrance
-AStruct* compiler(std::string& input);
+class AKCompiler {
+public:
+    // compiler Entrance
+    static AStruct& compiler(string& input);
+
+    static int tokenizer(string& input, TokenptrVector& tokens);
+    static AStruct& aster(TokenptrVector& tokens);
+private:
+    static AStruct* walk(TokenptrVector& tokens, uint32_t& current);
+};
