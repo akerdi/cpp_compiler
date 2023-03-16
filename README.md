@@ -2,7 +2,7 @@
 
 Implement `Input String` to `AStruct*`.
 
-Usage:
+## Usage
 
 ```c++
 string input;
@@ -13,6 +13,18 @@ program->deleteNode();
 ```
 
 More test see `foo.cpp`
+
+## Environment
+
+`CMake Option: USE_MY_COMPILER`
+
+    ON: Library Mode
+    OFF: Test Mode
+
+## TODO
+
+- [ ] Letter match regex enable
+- [ ] Number match regex enable
 
 ## Other Language
 
