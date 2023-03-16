@@ -7,7 +7,7 @@ using namespace std;
 void doWork(string& input) {
     cout << input << ": " << endl;
     AStruct* program = compiler(input);
-    program->print(0);
+    program->print();
     program->deleteNode();
     cout << endl << endl;
 }
