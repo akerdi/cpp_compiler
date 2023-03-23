@@ -15,7 +15,7 @@
 // Symbol content
 #define DEF_IS_LETTERS(x) ( \
     isalnum(x) || \
-    '+' == x || '-' == x || '*' == x || '/' == x || '=' || \
+    '+' == x || '-' == x || '*' == x || '/' == x || '=' || '>' == x || '<' == x || \
     '\\' == x || '_' == x || '&' == x \
 )
 typedef enum {
