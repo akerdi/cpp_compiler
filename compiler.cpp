@@ -93,8 +93,7 @@ int AKCompiler::tokenizer(string& input, TokenptrVector& tokens) {
             tokens.push_back(t);
             continue;
         }
-        cout << __func__ << " Unknown type: " << c << endl;
-        exit(1);
+        throw string(__func__) + " Unknown type: " + c;
     }
     return tokens.size();
 }
@@ -175,7 +174,13 @@ AStruct& AKCompiler::aster(TokenptrVector& tokens) {
 
 AStruct& AKCompiler::compiler(string& input) {
     TokenptrVector tokens;
-    int count = tokenizer(input, tokens);
+    try {
+        tokenizer(input, tokens);
+    } catch (const string& error) {
+        AStruct* astruct = new AStruct(Ast_Type_Error);
+        astruct->error = error;
+        return *astruct;
+    }
     return aster(tokens);
 }
 
@@ -189,15 +194,16 @@ static void print_indent(uint32_t indent = 0) {
 
 static string type2name(Ast_Type type) {
     switch (type) {
-        case Ast_Type_Program: return ">";
-        case Ast_Type_Comment: return "Comment";
-        case Ast_Type_Number: return "Number";
-        case Ast_Type_String: return "String";
-        case Ast_Type_Symbol: return "Symbol";
-        case Ast_Type_SExpr: return "Sexpr";
-        case Ast_Type_Semi: return "SemiColon";
-        case Ast_Type_QExpr: return "Qexpr";
-        case Ast_type_Quote: return "Quote";
+        case Ast_Type_Error:    return "Error";
+        case Ast_Type_Program:  return ">";
+        case Ast_Type_Comment:  return "Comment";
+        case Ast_Type_Number:   return "Number";
+        case Ast_Type_String:   return "String";
+        case Ast_Type_Symbol:   return "Symbol";
+        case Ast_Type_SExpr:    return "Sexpr";
+        case Ast_Type_Semi:     return "SemiColon";
+        case Ast_Type_QExpr:    return "Qexpr";
+        case Ast_type_Quote:    return "Quote";
         default:
             return "Unknown Type!" + type;
     }
@@ -221,6 +227,9 @@ void AStruct::print(uint32_t indent) {
         case Ast_Type_SExpr:
         case Ast_Type_QExpr:
             expr_print(indent);
+            break;
+        case Ast_Type_Error:
+            cout << type2name(type) << " : " << error << endl;
             break;
         default:
             print_indent(indent);

@@ -4,10 +4,15 @@ Implement `Input String` to `AStruct*`.
 
 ## Usage
 
-```c++
+```cpp
 string input;
 input = "if (+ x y) { * 890909 9 } { / 9 3 }";
 AStruct* program = compiler(input);
+if (Ast_Type_Error == program.type) {
+    program.print();
+    program.deleteNode();
+    continue;
+}
 program->print();
 program->deleteNode();
 ```
@@ -25,6 +30,7 @@ More test see `foo.cpp`
 
 - [ ] Letter match regex enable
 - [ ] Number match regex enable
+- [x] Error type return
 
 ## Other Language
 

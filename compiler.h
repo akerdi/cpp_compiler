@@ -15,7 +15,7 @@
 // Symbol content
 #define DEF_IS_LETTERS(x) ( \
     isalnum(x) || \
-    '+' == x || '-' == x || '*' == x || '/' == x || \
+    '+' == x || '-' == x || '*' == x || '/' == x || '=' || \
     '\\' == x || '_' == x || '&' == x \
 )
 typedef enum {
@@ -28,6 +28,7 @@ typedef enum {
 } Token_Type;
 
 typedef enum {
+    Ast_Type_Error,
     Ast_Type_Program,
     Ast_Type_Comment,
     Ast_Type_Symbol,
@@ -54,8 +55,10 @@ public:
 class AStruct {
 public:
     Ast_Type type;
+    std::string error;
     std::string content;
     ASTptrVector* children;
+    AStruct(Ast_Type a): type(a) {}
     AStruct(Ast_Type a, std::string b, ASTptrVector* c = NULL): type(a), content(b), children(c) {}
     // print node
     void print(uint32_t indent = 0);
