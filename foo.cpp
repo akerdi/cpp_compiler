@@ -11,8 +11,15 @@ void doWork(string& input) {
     program.deleteNode();
     cout << endl << endl;
 }
+void loadfile(const string& filename) {
+    cout << filename << ": " << endl;
+    AStruct& program = AKCompiler::loadfile(filename);
+    program.print();
+    program.deleteNode();
+    cout << endl << endl;
+}
 
-int main() {
+void testInput() {
     string input;
     input = "if (+ x y) { * 890909 9 } { / 9 3 }";
     doWork(input);
@@ -60,4 +67,13 @@ int main() {
     doWork(input);
     input = "print \"Hello World!\"";
     doWork(input);
+}
+
+void testLoadfile() {
+    loadfile("test.lisp");
+}
+
+int main() {
+    testInput();
+    testLoadfile();
 }

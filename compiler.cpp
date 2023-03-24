@@ -1,3 +1,4 @@
+#include <fstream>
 
 using namespace std;
 
@@ -5,7 +6,7 @@ using namespace std;
 
 #include "compiler.h"
 
-int AKCompiler::tokenizer(string& input, TokenptrVector& tokens) {
+int AKCompiler::tokenizer(const string& input, TokenptrVector& tokens) {
     int current = 0;
     while (current < input.size()) {
         char c = input.at(current);
@@ -34,6 +35,10 @@ int AKCompiler::tokenizer(string& input, TokenptrVector& tokens) {
             continue;
         }
         if (DEF_IS_Empty(c)) {
+            current++;
+            continue;
+        }
+        if (DEF_IS_NEXT_LINE(c)) {
             current++;
             continue;
         }
@@ -71,15 +76,19 @@ int AKCompiler::tokenizer(string& input, TokenptrVector& tokens) {
                 if (current >= input.size()) break;
                 c = input.at(current);
             }
-            while (!DEF_IS_NEXT_LINE(c) && current <= input.size()) {
+            while (current <= input.size()) {
                 value += c;
                 current++;
                 if (current >= input.size()) break;
                 c = input.at(current);
+                if (DEF_IS_NEXT_LINE(c)) {
+                    current++;
+                    break;
+                }
             }
-            c = input.at(++current);
             Token* t = new Token(Token_Type_Comment, value);
             tokens.push_back(t);
+            continue;
         }
         if (DEF_IS_LETTERS(c)) {
             string value;
@@ -172,7 +181,7 @@ AStruct& AKCompiler::aster(TokenptrVector& tokens) {
     return *ast;
 }
 
-AStruct& AKCompiler::compiler(string& input) {
+AStruct& AKCompiler::compiler(const string& input) {
     TokenptrVector tokens;
     try {
         tokenizer(input, tokens);
@@ -182,6 +191,20 @@ AStruct& AKCompiler::compiler(string& input) {
         return *astruct;
     }
     return aster(tokens);
+}
+AStruct& AKCompiler::loadfile(const string& filename) {
+    ifstream ifs(filename, ios::in | ios::binary);
+    if (!ifs.is_open()) {
+        AStruct* astruct = new AStruct(Ast_Type_Error);
+        astruct->error = "文件打开失败: " + filename;
+        return *astruct;
+    }
+    // TODO multiple read instread
+    const char buf[2048] = {'\0'};
+    ifs.read((char*)buf, sizeof(buf));
+    ifs.close();
+
+    return compiler(buf);
 }
 
 #pragma mark ---

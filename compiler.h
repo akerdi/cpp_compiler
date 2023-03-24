@@ -73,10 +73,11 @@ private:
 class AKCompiler {
 public:
     // compiler Entrance
-    static AStruct& compiler(std::string& input);
+    static AStruct& compiler(const std::string&);
+    static AStruct& loadfile(const std::string&);
 
-    static int tokenizer(std::string& input, TokenptrVector& tokens);
-    static AStruct& aster(TokenptrVector& tokens);
+    static int tokenizer(const std::string&, TokenptrVector&);
+    static AStruct& aster(TokenptrVector&);
 private:
-    static AStruct* walk(TokenptrVector& tokens, uint32_t& current);
+    static AStruct* walk(TokenptrVector&, uint32_t&);
 };
