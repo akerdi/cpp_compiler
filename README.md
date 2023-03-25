@@ -30,6 +30,7 @@ More test see `foo.cpp`
 
 - [ ] Letter match regex enable
 - [ ] Number match regex enable
+- [ ] Load the file separated by \n, not by 4096 bytes
 - [x] Error type return
 
 ## Other Language

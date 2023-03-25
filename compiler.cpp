@@ -200,7 +200,7 @@ AStruct& AKCompiler::loadfile(const string& filename) {
         return *astruct;
     }
     // TODO multiple read instread
-    const char buf[2048] = {'\0'};
+    const char buf[4096] = {'\0'};
     ifs.read((char*)buf, sizeof(buf));
     ifs.close();
 
