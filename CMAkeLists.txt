@@ -5,7 +5,7 @@ set(COMPILER_VERSION_MAJOR 1)
 set(COMPILER_VERSION_MINOR 0)
 
 option(COMPILER_LIB_MODE
-    "Use Provided compiler implementation" OFF)
+    "Use Provided compiler implementation" ON)
 
 configure_file(
     "${PROJECT_SOURCE_DIR}/config.h.in"
