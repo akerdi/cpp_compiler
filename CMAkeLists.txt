@@ -12,12 +12,11 @@ configure_file(
     "${PROJECT_SOURCE_DIR}/config.h"
 )
 
-aux_source_directory(. DIR_SRCS)
-
 if (COMPILER_LIB_MODE)
-    message("set up lib mode: COMPILER")
+    message("generate library: COMPILER")
     add_library(COMPILER compiler.cpp)
 else()
-    message("set up executable")
+    message("run test for compiler")
+    aux_source_directory(. DIR_SRCS)
     add_executable(app ${DIR_SRCS})
 endif()

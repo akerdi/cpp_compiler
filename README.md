@@ -7,21 +7,20 @@ Implement `Input String` to `AStruct*`.
 ```cpp
 string input;
 input = "if (+ x y) { * 890909 9 } { / 9 3 }";
-AStruct* program = compiler(input);
-if (Ast_Type_Error == program.type) {
+AStruct& program = AKCompiler::compiler(input);
     program.print();
     program.deleteNode();
-    continue;
+    cout << endl << endl;
 }
-program->print();
-program->deleteNode();
 ```
 
 More test see `foo.cpp`
 
 ## Environment
 
-`CMake Option: USE_MY_COMPILER`
+force compiler to be a library:
+
+`CMake Option: COMPILER_LIB_MODE`
 
     ON: Library Mode
     OFF: Test Mode
