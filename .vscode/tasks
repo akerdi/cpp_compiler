@@ -9,7 +9,7 @@
             "command": "cmake",
             "args": [
                 "-DCMAKE_BUILD_TYPE=debug",
-                "-DLIB_MODE=false",
+                "-DCOMPILER_LIB_MODE=false",
                 "."
             ]
         },

@@ -4,7 +4,7 @@ project(app)
 set(COMPILER_VERSION_MAJOR 1)
 set(COMPILER_VERSION_MINOR 0)
 
-option(LIB_MODE
+option(COMPILER_LIB_MODE
     "Use Provided compiler implementation" OFF)
 
 configure_file(
@@ -14,7 +14,7 @@ configure_file(
 
 aux_source_directory(. DIR_SRCS)
 
-if (LIB_MODE)
+if (COMPILER_LIB_MODE)
     message("set up lib mode: COMPILER")
     add_library(COMPILER compiler.cpp)
 else()
