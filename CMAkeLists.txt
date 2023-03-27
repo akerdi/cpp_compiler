@@ -4,7 +4,7 @@ project(app)
 set(COMPILER_VERSION_MAJOR 1)
 set(COMPILER_VERSION_MINOR 0)
 
-option(USE_MY_COMPILER
+option(LIB_MODE
     "Use Provided compiler implementation" OFF)
 
 configure_file(
@@ -14,10 +14,10 @@ configure_file(
 
 aux_source_directory(. DIR_SRCS)
 
-if (USE_MY_COMPILER)
-    message("use my compiler on")
+if (LIB_MODE)
+    message("set up lib mode: COMPILER")
     add_library(COMPILER compiler.cpp)
 else()
-    message("use my compiler offffff")
+    message("set up executable")
     add_executable(app ${DIR_SRCS})
 endif()
