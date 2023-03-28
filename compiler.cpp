@@ -199,8 +199,11 @@ AStruct& AKCompiler::loadfile(const string& filename) {
         astruct->error = "文件打开失败: " + filename;
         return *astruct;
     }
-    // TODO multiple read instread
-    const char buf[4096] = {'\0'};
+    ifs.seekg(0, ios::end);
+    size_t pos = 0;
+    pos = ifs.tellg();
+    ifs.seekg(0, ios::beg);
+    char buf[pos];
     ifs.read((char*)buf, sizeof(buf));
     ifs.close();
 

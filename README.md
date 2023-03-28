@@ -29,7 +29,7 @@ force compiler to be a library:
 
 - [ ] Letter match regex enable
 - [ ] Number match regex enable
-- [ ] Load the file separated by \n, not by 4096 bytes
+- [x] Load file with flexible size of char
 - [x] Error type return
 
 ## Other Language
